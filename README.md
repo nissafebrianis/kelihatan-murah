@@ -21,6 +21,4 @@ Dibuat dengan HTML, CSS, dan JavaScript vanilla. Tidak ada dependency eksternal.
 
 ## Akses Online
 
-Kunjungi: `https://USERNAME.github.io/kelihatannya-murah/`
-
-(Ganti USERNAME dengan username GitHub kamu)
+Kunjungi: https://nissafebrianis.github.io/kelihatan-murah/
