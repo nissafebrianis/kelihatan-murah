@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kelihatannya Murah — Kuis Edukasi Finansial</title>
+<style>
+  :root{
+    --cream:#F4EFE3;
+    --cream-2:#EDE6D4;
+    --paper:#FFFFFF;
+    --ink:#111111;
+    --ink-soft:#2B2B2B;
+    --muted:#6E6A60;
+    --line:#1a1a1a;
+    --yellow:#F5C842;
+    --yellow-deep:#E0B12C;
+    --blue:#A9D0E2;
+    --blue-deep:#5D9BB6;
+    --green:#3F9D6E;
+    --green-bg:#E6F4EC;
+    --red:#C84B4B;
+    --red-bg:#F8E6E6;
+    --shadow: 6px 6px 0 0 #111111;
+    --shadow-sm: 3px 3px 0 0 #111111;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--cream);color:var(--ink);}
+  body{
+    font-family: "Aptos", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height:1.55;
+    min-height:100vh;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(17,17,17,0.06) 1px, transparent 0);
+    background-size: 22px 22px;
+  }
+
+  .serif{
+    font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    font-weight: 600;
+    letter-spacing:-0.01em;
+  }
+  .italic{font-style:italic;}
+
+  .app{
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 28px 20px 80px;
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 18px;
+    background:var(--paper);
+    border:2px solid var(--line);
+    border-radius:14px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 22px;
+  }
+  .brand{
+    display:flex;align-items:center;gap:10px;
+    font-weight:700;
+  }
+  .brand-mark{
+    width:30px;height:30px;border-radius:8px;
+    background:var(--yellow);
+    border:2px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    font-family:"Fraunces",Georgia,serif;
+    font-weight:700;
+  }
+  .brand-text{font-family:"Fraunces",Georgia,serif;font-size:18px;}
+  .topbar-meta{display:flex;align-items:center;gap:14px;font-size:13px;color:var(--muted)}
+  .pill{
+    background:var(--cream-2);
+    border:1.5px solid var(--line);
+    border-radius:999px;
+    padding:6px 12px;
+    font-weight:600;color:var(--ink);
+    font-size:13px;
+  }
+
+  /* ---------- Progress ---------- */
+  .progress-wrap{margin-bottom:18px}
+  .progress-label{
+    display:flex;justify-content:space-between;
+    font-size:12px; color:var(--muted);
+    margin-bottom:6px;
+    font-weight:600;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+  }
+  .progress-bar{
+    width:100%;height:14px;
+    background:var(--paper);
+    border:2px solid var(--line);
+    border-radius:999px;
+    overflow:hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  .progress-fill{
+    height:100%;
+    background: linear-gradient(90deg, var(--yellow) 0%, var(--yellow-deep) 100%);
+    width:0%;
+    transition: width .5s cubic-bezier(.6,.2,.2,1);
+    border-right:2px solid var(--line);
+  }
+
+  /* ---------- Card ---------- */
+  .card{
+    background:var(--paper);
+    border:2px solid var(--line);
+    border-radius:18px;
+    box-shadow: var(--shadow);
+    padding: 28px;
+  }
+  .card + .card{margin-top:18px}
+
+  .tag{
+    display:inline-block;
+    background:var(--blue);
+    border:1.5px solid var(--line);
+    border-radius:999px;
+    padding:4px 12px;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    margin-bottom:12px;
+  }
+  .tag-yellow{background:var(--yellow)}
+
+  h1{
+    font-family:"Fraunces",Georgia,serif;
+    font-size: clamp(32px, 6vw, 46px);
+    line-height:1.05;
+    margin-bottom: 14px;
+  }
+  h2{
+    font-family:"Fraunces",Georgia,serif;
+    font-size: clamp(22px, 4vw, 28px);
+    line-height:1.15;
+    margin-bottom: 10px;
+  }
+  h3{
+    font-family:"Fraunces",Georgia,serif;
+    font-size: 20px;
+    margin-bottom:8px;
+  }
+  p{font-size:15px;color:var(--ink-soft);line-height:1.7}
+  .muted{color:var(--muted)}
+  .lead{font-size:16px;color:var(--ink-soft)}
+
+  /* ---------- Screens ---------- */
+  .screen{display:none}
+  .screen.active{display:block;animation: fade .35s ease both}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* ---------- Start screen ---------- */
+  .start-hero{
+    display:grid;gap:18px;
+  }
+  .start-hero .eyebrow{
+    display:flex;align-items:center;gap:10px;
+    font-size:12px;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--muted);font-weight:700;
+  }
+  .eyebrow .dot{width:8px;height:8px;background:var(--yellow);border:1.5px solid var(--line);border-radius:50%}
+  .start-hero h1 .accent{color:var(--ink);background:var(--yellow);padding:0 8px;border-radius:6px;border:2px solid var(--line);display:inline-block;transform:rotate(-1deg)}
+  .start-hero .sub{font-size:16px;color:var(--ink-soft);max-width:55ch}
+
+  .feature-row{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:10px;
+    margin-top:6px;
+  }
+  .feature{
+    border:1.5px solid var(--line);
+    border-radius:12px;
+    padding:12px;
+    background:var(--cream-2);
+  }
+  .feature .num{
+    font-family:"Fraunces",Georgia,serif;
+    font-weight:700;
+    font-size:13px;
+    color:var(--ink);
+    background:var(--yellow);
+    border:1.5px solid var(--line);
+    border-radius:6px;
+    display:inline-block;
+    padding:1px 7px;
+    margin-bottom:6px;
+  }
+  .feature p{font-size:13px;color:var(--ink-soft)}
+  .feature strong{font-family:"Fraunces",Georgia,serif;font-weight:600}
+
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+  .btn{
+    appearance:none;border:2px solid var(--line);
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Fraunces",Georgia,serif;
+    font-weight:600;
+    font-size:17px;
+    padding:14px 22px;
+    border-radius:12px;
+    cursor:pointer;
+    box-shadow: var(--shadow-sm);
+    transition: transform .12s ease, box-shadow .12s ease, background .15s ease;
+  }
+  .btn:hover{transform: translate(-2px,-2px); box-shadow: 6px 6px 0 0 #111111;}
+  .btn:active{transform: translate(1px,1px); box-shadow: 1px 1px 0 0 #111111;}
+  .btn-primary{background:var(--yellow)}
+  .btn-ghost{background:var(--paper)}
+
+  /* ---------- Quiz ---------- */
+  .scenario-card{
+    background:var(--cream-2);
+    border:2px solid var(--line);
+    border-radius:14px;
+    padding:18px;
+    margin: 12px 0 16px;
+  }
+  .scenario-card p{white-space:pre-line;font-size:15.5px}
+
+  .question{margin-top:6px}
+
+  .choices{
+    display:grid;gap:12px;
+    margin-top:14px;
+  }
+  .choice{
+    text-align:left;
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    width:100%;
+    background:var(--paper);
+    border:2px solid var(--line);
+    border-radius:14px;
+    padding:16px 18px;
+    font-size:16px;
+    color:var(--ink);
+    font-weight:600;
+    cursor:pointer;
+    box-shadow: var(--shadow-sm);
+    transition: transform .12s ease, box-shadow .12s ease, background .15s ease;
+    font-family: inherit;
+  }
+  .choice:hover{transform: translate(-2px,-2px); box-shadow: 6px 6px 0 0 #111111;}
+  .choice:active{transform: translate(1px,1px); box-shadow: 1px 1px 0 0 #111111;}
+  .choice .key{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:30px;height:30px;border-radius:8px;
+    background:var(--yellow);
+    border:1.5px solid var(--line);
+    font-family:"Fraunces",Georgia,serif;font-weight:700;
+    margin-right:12px;
+    flex-shrink:0;
+  }
+  .choice .label{flex:1}
+  .choice.correct{
+    background:var(--green-bg);
+    border-color:var(--green);
+    color: var(--green);
+  }
+  .choice.correct .key{background:var(--green);color:#fff;border-color:var(--green)}
+  .choice.wrong{
+    background:var(--red-bg);
+    border-color:var(--red);
+    color: var(--red);
+  }
+  .choice.wrong .key{background:var(--red);color:#fff;border-color:var(--red)}
+  .choice:disabled{cursor:default}
+  .choice:disabled:hover{transform:none; box-shadow: var(--shadow-sm);}
+  .choice.faded{opacity:.55}
+
+  /* ---------- Reveal ---------- */
+  .reveal{
+    margin-top:18px;
+    border:2px solid var(--line);
+    border-radius:14px;
+    padding:18px;
+    background:var(--paper);
+  }
+  .reveal-head{
+    display:flex;align-items:center;justify-content:space-between;
+    flex-wrap:wrap;gap:8px;
+    margin-bottom:10px;
+  }
+  .status{
+    display:inline-flex;align-items:center;gap:8px;
+    font-weight:700;
+    font-family:"Fraunces",Georgia,serif;
+    font-size:16px;
+    padding:6px 12px;
+    border-radius:999px;
+    border:1.5px solid var(--line);
+  }
+  .status.ok{background:var(--green-bg);color:var(--green)}
+  .status.no{background:var(--red-bg);color:var(--red)}
+
+  .grid-2{
+    display:grid;gap:12px;
+    grid-template-columns: 1fr 1fr;
+    margin-top:8px;
+  }
+  .stat{
+    background:var(--cream-2);
+    border:2px solid var(--line);
+    border-radius:12px;
+    padding:12px 14px;
+  }
+  .stat .lbl{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:0.06em}
+  .stat .val{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:22px;margin-top:2px}
+  .stat.bakso .val{color:var(--blue-deep)}
+
+  .answer-line{
+    background:var(--cream-2);
+    border:1.5px solid var(--line);
+    border-radius:12px;
+    padding:12px 14px;
+    margin-top:8px;
+    font-size:15px;
+  }
+  .answer-line strong{font-family:"Fraunces",Georgia,serif;font-weight:600}
+
+  .insight{
+    margin-top:14px;
+    background:var(--paper);
+    border:2px dashed var(--line);
+    border-radius:14px;
+    padding:16px 18px;
+  }
+  .insight h4{
+    font-family:"Fraunces",Georgia,serif;
+    font-size:15px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--muted);
+    margin-bottom:8px;
+  }
+  .insight p{font-size:15px;color:var(--ink-soft);white-space:pre-line}
+
+  .next-row{display:flex;justify-content:space-between;margin-top:14px;gap:10px}
+
+  /* ---------- End screen ---------- */
+  .end-hero{
+    text-align:center;
+    padding: 14px 8px 4px;
+  }
+  .end-hero .badge{
+    display:inline-block;
+    background:var(--yellow);
+    border:2px solid var(--line);
+    border-radius:999px;
+    padding:6px 14px;
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    margin-bottom:12px;
+  }
+  .end-hero h1{margin-bottom:8px}
+  .end-hero .sub{max-width:55ch;margin:0 auto;color:var(--ink-soft)}
+
+  .score-ring{
+    margin: 18px auto;
+    width: 180px;height:180px;
+    border-radius:50%;
+    background:var(--paper);
+    border:2px solid var(--line);
+    box-shadow: var(--shadow);
+    display:flex;align-items:center;justify-content:center;
+    flex-direction:column;
+    position:relative;
+  }
+  .score-ring .num{
+    font-family:"Fraunces",Georgia,serif;
+    font-weight:600;
+    font-size:56px;
+    line-height:1;
+  }
+  .score-ring .lbl{
+    font-size:12px;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--muted);font-weight:700;margin-top:4px;
+  }
+  .score-ring::after{
+    content:"";
+    position:absolute;inset:-10px;
+    border:2px dashed var(--line);
+    border-radius:50%;
+    opacity:.35;
+  }
+
+  .summary{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px
+  }
+  .sumbox{
+    border:1.5px solid var(--line);
+    border-radius:12px;
+    padding:12px;
+    background:var(--cream-2);
+    text-align:center;
+  }
+  .sumbox .num{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:22px}
+  .sumbox .lbl{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-top:2px}
+
+  .reflection{
+    background:var(--cream-2);
+    border:2px solid var(--line);
+    border-radius:14px;
+    padding:16px 18px;
+    margin-top:14px;
+  }
+  .reflection h3{margin-bottom:10px}
+  .reflection p{font-size:14px;color:var(--ink-soft);line-height:1.6}
+
+  .footer{
+    text-align:center;color:var(--muted);font-size:12.5px;
+    margin-top:18px;line-height:1.6;
+  }
+  .footer strong{font-family:"Fraunces",Georgia,serif;font-weight:600;color:var(--ink)}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 560px){
+    .app{padding:18px 14px 70px}
+    .card{padding:20px}
+    .topbar{padding:10px 12px}
+    .feature-row{grid-template-columns:1fr}
+    .grid-2{grid-template-columns:1fr}
+    .summary{grid-template-columns:1fr}
+    .choice{padding:14px}
+    .choice .key{margin-right:10px}
+    .btn{width:100%;justify-content:center}
+    .btn-row{flex-direction:column}
+    .next-row{justify-content:stretch}
+    .next-row .btn{width:100%}
+    h1{font-size:32px}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ============ TOP BAR ============ -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">K</div>
+      <div class="brand-text">Kelihatannya Murah</div>
+    </div>
+    <div class="topbar-meta" id="meta-area">
+      <span class="pill" id="score-pill" style="display:none">Skor: <span id="score-val">0</span></span>
+    </div>
+  </header>
+
+  <!-- ============ PROGRESS ============ -->
+  <div class="progress-wrap" id="progress-wrap" style="display:none">
+    <div class="progress-label">
+      <span id="progress-label">Skenario 1 dari 15</span>
+      <span id="progress-pct">0%</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  </div>
+
+  <!-- ============ START SCREEN ============ -->
+  <section class="screen active" id="start-screen">
+    <div class="card start-hero">
+      <div class="eyebrow"><span class="dot"></span> Kuis Edukasi Finansial</div>
+      <h1>Keputusan yang <span class="accent italic">kelihatannya murah</span>, belum tentu murah di akhir.</h1>
+      <p class="sub">Game ini bukan untuk membuat kamu stres soal uang. Tujuannya sederhana, membuat kamu berhenti sejenak, berpikir, dan menyadari bahwa angka kecil ternyata bisa menjadi besar di akhir.</p>
+
+      <p style="font-size:13px;color:var(--muted);font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin-top:16px;margin-bottom:8px">Cara mainnya</p>
+
+      <div class="feature-row">
+        <div class="feature">
+          <div class="num">01</div>
+          <p><strong>Langkah pertama,</strong> baca skenarionya. Di sinilah pikiran pertama kamu muncul.</p>
+        </div>
+        <div class="feature">
+          <div class="num">02</div>
+          <p><strong>Langkah kedua,</strong> tebak totalnya. Jangan lihat cicilan per bulan, lihat total sampai lunas.</p>
+        </div>
+        <div class="feature">
+          <div class="num">03</div>
+          <p><strong>Langkah ketiga,</strong> lihat revealnya. Kamu akan kaget sendiri melihat angka yang sebenarnya.</p>
+        </div>
+      </div>
+
+      <div class="btn-row" style="margin-top:18px">
+        <button class="btn btn-primary" id="btn-start">Mulai Main</button>
+      </div>
+    </div>
+
+    <p class="footer">
+      Prinsip utama <strong>Jangan berhenti di cicilan bulanan. Hitung total uang yang benar-benar keluar sampai lunas.</strong><br>
+      Angka di game ini adalah simulasi edukatif. Biaya di dunia nyata bisa berbeda tergantung penyedia, tenor, bunga, biaya admin, dan ketentuan kontrak.
+    </p>
+  </section>
+
+  <!-- ============ QUIZ SCREEN ============ -->
+  <section class="screen" id="quiz-screen">
+    <div class="card">
+      <span class="tag" id="q-category">Kategori</span>
+      <h2 id="q-title">Judul skenario</h2>
+
+      <div class="scenario-card">
+        <p id="q-scenario">Skenario...</p>
+      </div>
+
+      <h3 class="question" id="q-question">Pertanyaan?</h3>
+
+      <div class="choices" id="choices"></div>
+
+      <div class="reveal" id="reveal" style="display:none">
+        <div class="reveal-head">
+          <div>
+            <span class="status" id="status-badge">Status</span>
+          </div>
+          <div class="pill" id="correct-pill">Jawaban benar</div>
+        </div>
+
+        <div class="answer-line" id="answer-line">Yang benar sebenarnya: ...</div>
+
+        <div class="grid-2">
+          <div class="stat">
+            <div class="lbl">Total biaya</div>
+            <div class="val" id="stat-total">Rp0</div>
+          </div>
+          <div class="stat bakso">
+            <div class="lbl">Setara bakso</div>
+            <div class="val" id="stat-bakso">0 mangkok</div>
+          </div>
+        </div>
+
+        <div class="answer-line" id="bakso-note" style="margin-top:10px"></div>
+
+        <div class="insight">
+          <h4>Mengapa biaya ini terasa ringan?</h4>
+          <p id="insight-text">Insight...</p>
+        </div>
+
+        <div class="next-row">
+          <button class="btn btn-ghost" id="btn-prev" style="display:none">Sebelumnya</button>
+          <button class="btn btn-primary" id="btn-next">Lanjut</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ END SCREEN ============ -->
+  <section class="screen" id="end-screen">
+    <div class="card">
+      <div class="end-hero">
+        <div class="badge">Game Selesai</div>
+        <h1>Skor kamu <span id="end-headline">bagus</span>.</h1>
+        <p class="sub" id="end-sub">Hasil permainan kamu diringkas di bawah ini.</p>
+      </div>
+
+      <div class="score-ring">
+        <div class="num" id="end-score">0%</div>
+        <div class="lbl">Total benar</div>
+      </div>
+
+      <div class="summary">
+        <div class="sumbox"><div class="num" id="end-correct">0</div><div class="lbl">Benar</div></div>
+        <div class="sumbox"><div class="num" id="end-wrong">0</div><div class="lbl">Kurang tepat</div></div>
+        <div class="sumbox"><div class="num" id="end-total">0</div><div class="lbl">Total soal</div></div>
+      </div>
+
+      <div class="reflection">
+        <h3 id="end-reflection-title">Refleksi</h3>
+        <p id="end-reflection-text"></p>
+      </div>
+
+      <div class="btn-row" style="justify-content:center;margin-top:18px">
+        <button class="btn btn-primary" id="btn-restart">Main Lagi</button>
+      </div>
+    </div>
+
+    <p class="footer">
+      <strong>Prinsip utama</strong> jangan berhenti di cicilan bulanan. Hitung total uang yang benar-benar keluar sampai lunas.<br>
+      Angka di game ini dipakai untuk simulasi edukatif. Dalam dunia nyata, biaya pinjaman atau cicilan bisa berbeda tergantung penyedia, tenor, bunga, biaya admin, denda, dan ketentuan kontrak.
+    </p>
+  </section>
+
+</div>
+
+<script>
+/* ============================================================
+   KELIHATANNYA MURAH — Kuis Edukasi Finansial
+   Single-file vanilla JS. Data skenario ada di array SCENARIOS.
+   ============================================================ */
+
+const BAKSO_PRICE = 15000;
+
+/* ---------- Helpers ---------- */
+const $ = (sel) => document.querySelector(sel);
+const $$ = (sel) => document.querySelectorAll(sel);
+
+const fmtRp = (n) => {
+  // n is integer (rupiah). For negative numbers, format as "-Rp..."
+  const abs = Math.abs(n);
+  const s = abs.toLocaleString("id-ID");
+  return (n < 0 ? "-Rp" : "Rp") + s;
+};
+const fmtRpPlain = (n) => "Rp" + Math.abs(n).toLocaleString("id-ID");
+const baksoText = (amount) => {
+  // amount can be positive or negative; we compare |amount| / 15000.
+  const ratio = Math.round(Math.abs(amount) / BAKSO_PRICE);
+  return ratio.toLocaleString("id-ID") + " mangkok";
+};
+
+/* ---------- Scenarios data ---------- */
+const SCENARIOS = [
+  {
+    category: "Pinjaman",
+    title: "Pinjam Rp1 juta selama 1 tahun",
+    scenario: "Kamu pinjam Rp1.000.000.\n\nDi awal, cicilannya kelihatan masih masuk akal karena dibagi selama 12 bulan.",
+    question: "Menurut kamu, total uang yang keluar sampai lunas jadi berapa?",
+    choices: [
+      { label: "Rp1.100.000", value: 1100000 },
+      { label: "Rp1.250.000", value: 1250000 },
+      { label: "Rp1.450.000", value: 1450000 },
+      { label: "Rp1.800.000", value: 1800000 }
+    ],
+    correctValue: 1450000,
+    answerText: "Rp1.450.000",
+    revealText: "Berarti kamu membayar tambahan Rp450.000 dari uang yang kamu pinjam.",
+    baksoAmount: 450000,
+    baksoNote: "Tambahan Rp450.000 ini setara dengan 30 mangkok bakso.",
+    insight: `Kamu meminjam Rp1.000.000 dengan cicilan yang terlihat ringan. Namun total yang harus kamu bayar ternyata Rp1.450.000.
+
+Tambahan Rp450.000 jika dipecah per bulan hanya Rp37.500, atau sekitar Rp1.250 per hari. Angka yang terasa kecil. Tapi karena kamu membayarnya terus selama setahun, akhirnya menjadi Rp450.000 juga.
+
+Coba tanya pada diri sendiri. Apakah cicilan ini sanggup saya bayar? Dan, apakah saya bersedia mengeluarkan 30 mangkok bakso hanya untuk meminjam uang ini sekarang?`
+  },
+  {
+    category: "Motor",
+    title: "Motor 3 tahun vs 5 tahun",
+    scenario: "Motor seharga Rp46.800.000.\n\nPilihan A:\nCicilan Rp1.300.000 per bulan selama 3 tahun (36 bulan).\n\nPilihan B:\nCicilan Rp950.000 per bulan selama 5 tahun (60 bulan).\n\nPilihan B kelihatan lebih ringan karena cicilan bulanannya lebih kecil.",
+    question: "Total bayar pilihan B sampai lunas jadi berapa?",
+    choices: [
+      { label: "Rp42.000.000", value: 42000000 },
+      { label: "Rp57.000.000", value: 57000000 },
+      { label: "Rp46.800.000", value: 46800000 },
+      { label: "Rp60.500.000", value: 60500000 }
+    ],
+    correctValue: 57000000,
+    answerText: "Rp57.000.000",
+    revealText: "Rp950.000 × 60 bulan = Rp57.000.000. Dibanding harga motor Rp46.800.000, kamu bayar Rp10.200.000 lebih.",
+    baksoAmount: 10200000,
+    baksoNote: "Tambahan Rp10.200.000 setara dengan 680 mangkok bakso.",
+    insight: `Cicilan Rp950.000 per bulan memang terasa lebih ringan dari Rp1.300.000. Tapi cicilan yang lebih kecil ini harus kamu bayar jauh lebih lama, 60 bulan dibanding 36 bulan. Selisihnya dua tahun penuh.
+
+Dua tahun tambahan ini sering tidak terasa kalau kamu hanya fokus ke cicilan bulanan. Di kepala, Rp950.000 terasa enak. Tapi pertanyaan yang lebih penting adalah, berapa lama kamu akan membayarnya?
+
+Cicilan kecil memang membuat keputusan terasa ringan. Tapi durasi yang panjang justru membuat total akhirnya lebih mahal. Tanyakan ini, berapa total uang yang keluar sampai benar-benar lunas? Bukan hanya, mana cicilan yang paling kecil?`
+  },
+  {
+    category: "Paylater",
+    title: "0% bunga, tapi ada biaya layanan",
+    scenario: "Kamu beli barang Rp500.000 pakai paylater.\n\nPromonya tertulis 0% bunga.\n\nTapi ada biaya layanan Rp25.000 per bulan selama 6 bulan.",
+    question: "Total uang yang kamu keluarkan jadi berapa?",
+    choices: [
+      { label: "Rp650.000", value: 650000 },
+      { label: "Rp500.000", value: 500000 },
+      { label: "Rp550.000", value: 550000 },
+      { label: "Rp750.000", value: 750000 }
+    ],
+    correctValue: 650000,
+    answerText: "Rp650.000",
+    revealText: "Harga barang Rp500.000 + biaya layanan Rp25.000 × 6 bulan = Rp650.000.",
+    baksoAmount: 150000,
+    baksoNote: "Biaya tambahannya Rp150.000, setara dengan 10 mangkok bakso.",
+    insight: `"0% bunga" memang terdengar aman, seperti kamu hanya membayar harga barang saja. Tapi 0% bunga belum tentu berarti 0 biaya.
+
+Di sini bunganya memang nol, tapi biaya layanan tetap dikenakan setiap bulan. Karena namanya bukan "bunga", biaya ini sering dianggap lebih ringan. Padahal hasilnya tetap sama, uang yang keluar menjadi lebih banyak.
+
+Barangnya Rp500.000, tapi total yang harus kamu bayar adalah Rp650.000. Kamu membayar Rp150.000 hanya karena memilih mencicil. Jadi kalau melihat promo 0%, jangan berhenti di kata "bunga". Cek juga biaya admin, biaya layanan, dan biaya lain yang menyertai.`
+  },
+  {
+    category: "Cicilan Gadget",
+    title: "HP Rp3 juta dicicil 24 bulan",
+    scenario: "Harga cash HP Rp3.000.000.\n\nAda cicilan Rp185.000 per bulan selama 24 bulan.\n\nDi awal, Rp185.000 terasa lebih ringan daripada bayar Rp3 juta sekaligus.",
+    question: "Total uang yang keluar sampai lunas jadi berapa?",
+    choices: [
+      { label: "Rp3.240.000", value: 3240000 },
+      { label: "Rp3.700.000", value: 3700000 },
+      { label: "Rp4.440.000", value: 4440000 },
+      { label: "Rp5.000.000", value: 5000000 }
+    ],
+    correctValue: 4440000,
+    answerText: "Rp4.440.000",
+    revealText: "Rp185.000 × 24 bulan = Rp4.440.000. Selisih dari harga cash adalah Rp1.440.000.",
+    baksoAmount: 1440000,
+    baksoNote: "Selisih Rp1.440.000 setara dengan 96 mangkok bakso.",
+    insight: `Cicilan Rp185.000 memang terasa jauh lebih ringan dari Rp3.000.000. Apalagi kalau uang cash kamu belum cukup.
+
+Tapi Rp185.000 ini harus kamu bayar terus selama 24 bulan, atau dua tahun penuh.
+
+Otak kita cenderung membandingkan Rp185.000 dengan Rp3.000.000. Tentu saja Rp185.000 terasa lebih ringan. Tapi perbandingan yang sebenarnya adalah Rp3.000.000 cash dibandingkan Rp4.440.000 jika dicicil.
+
+Selisihnya Rp1.440.000, hampir setengah dari harga HP.
+
+Sebelum mengambil cicilan gadget, tanya dua hal. Berapa cicilan per bulannya? Dan, kalau sudah lunas, berapa sebenarnya harga HP yang saya beli?`
+  },
+  {
+    category: "Biaya Harian",
+    title: "Cicilan cuma Rp20.000 per hari",
+    scenario: "Ada cicilan yang ditawarkan dengan kalimat:\n\n\"Cuma Rp20.000 per hari.\"\n\nKedengarannya kecil, bahkan lebih murah dari sekali jajan.",
+    question: "Kalau dibayar setiap hari selama 1 tahun, totalnya jadi berapa?",
+    choices: [
+      { label: "Rp1.200.000", value: 1200000 },
+      { label: "Rp3.650.000", value: 3650000 },
+      { label: "Rp9.000.000", value: 9000000 },
+      { label: "Rp7.300.000", value: 7300000 }
+    ],
+    correctValue: 7300000,
+    answerText: "Rp7.300.000",
+    revealText: "Rp20.000 × 365 hari = Rp7.300.000.",
+    baksoAmount: 7300000,
+    baksoNote: "Total Rp7.300.000 setara dengan sekitar 486 mangkok bakso.",
+    insight: `Rp20.000 per hari memang terasa kecil, bahkan lebih murah dari sekali minum kopi.
+
+Tapi kalau kamu membayarnya terus selama setahun, totalnya menjadi Rp7.300.000. Bukan angka kecil lagi.
+
+Kita cenderung membandingkan angka harian dengan pengeluaran kecil seperti gorengan, parkir, atau ongkir. Akhirnya muncul pikiran "ah cuma segitu." Padahal "cuma segitu" itu berulang setiap hari selama setahun.
+
+Kalau kamu melihat biaya per hari, langsung kalikan 30 untuk mengetahui biaya bulanannya. Baru terlihat angka yang sebenarnya.`
+  },
+
+  {
+    category: "Diskon",
+    title: "Diskon besar, tapi bayar pakai cicilan",
+    scenario: "Harga sepatu awal Rp800.000.\n\nLagi diskon jadi Rp650.000.\n\nTapi karena dibayar pakai cicilan, ada biaya tambahan total Rp120.000.",
+    question: "Berapa hemat yang benar-benar kamu dapat?",
+    choices: [
+      { label: "Hemat Rp150.000", value: 150000 },
+      { label: "Hemat Rp30.000", value: 30000 },
+      { label: "Hemat Rp120.000", value: 120000 },
+      { label: "Rugi Rp30.000", value: -30000 }
+    ],
+    correctValue: 30000,
+    answerText: "Hemat Rp30.000",
+    revealText: "Diskon Rp150.000 dikurangi biaya cicilan Rp120.000. Hemat real cuma Rp30.000.",
+    baksoAmount: 30000,
+    baksoNote: "Hemat real Rp30.000 setara dengan 2 mangkok bakso.",
+    insight: `Diskon Rp150.000 memang terasa menguntungkan.
+
+Tapi karena kamu membayar dengan cicilan, biaya tambahannya menjadi Rp120.000. Sisa hemat kamu ternyata hanya Rp30.000.
+
+Kita sering menghitung besaran diskonnya, tapi lupa menghitung biaya yang dikeluarkan untuk mendapatkan diskon tersebut. Akhirnya yang terasa hemat ternyata sangat tipis.
+
+Setiap melihat diskon yang digabung dengan cicilan, hitunglah total akhirnya. Jangan hanya melihat angka diskonnya saja.`
+  },
+
+  {
+    category: "Langganan",
+    title: "Langganan kecil yang lupa dimatikan",
+    scenario: "Ada langganan aplikasi Rp29.000 per bulan.\n\nKelihatannya kecil, jadi kamu biarkan saja.\n\nTapi kamu lupa mematikannya selama 1 tahun.",
+    question: "Total uang yang keluar jadi berapa?",
+    choices: [
+      { label: "Rp348.000", value: 348000 },
+      { label: "Rp174.000", value: 174000 },
+      { label: "Rp290.000", value: 290000 },
+      { label: "Rp429.000", value: 429000 }
+    ],
+    correctValue: 348000,
+    answerText: "Rp348.000",
+    revealText: "Rp29.000 × 12 bulan = Rp348.000.",
+    baksoAmount: 348000,
+    baksoNote: "Rp348.000 setara dengan sekitar 23 mangkok bakso.",
+    insight: `Rp29.000 memang terasa seperti uang jajan, kecil dan tidak menyakitkan.
+
+Tapi langganan ini berjalan otomatis. Uangnya keluar tanpa harus kamu putuskan lagi. Sekali mendaftar, biaya ini bisa terus berjalan bahkan kalau kamu sudah jarang menggunakan aplikasinya.
+
+Sebulan hanya Rp29.000. Tapi setahun menjadi Rp348.000.
+
+Coba cek dua hal. Apakah biaya ini benar-benar kecil? Dan, apakah kamu masih menggunakan layanan ini? Biaya kecil yang otomatis sering lebih berbahaya karena tidak terasa seperti keputusan baru.`
+  },
+
+  {
+    category: "Top Up",
+    title: "Top up terasa seperti dapat uang baru",
+    scenario: "Kamu masih punya sisa utang Rp700.000.\n\nAplikasi menawarkan top up pinjaman Rp1.500.000.\n\nTapi sisa utang lama langsung dipotong dari pinjaman baru.",
+    question: "Kalau Rp700.000 dipotong dari Rp1.500.000, uang baru yang benar-benar kamu terima berapa?",
+    choices: [
+      { label: "Rp1.500.000", value: 1500000 },
+      { label: "Rp1.200.000", value: 1200000 },
+      { label: "Rp700.000", value: 700000 },
+      { label: "Rp800.000", value: 800000 }
+    ],
+    correctValue: 800000,
+    answerText: "Rp800.000",
+    revealText: "Dari pinjaman baru Rp1.500.000, sisa utang lama Rp700.000 dipotong. Uang yang benar-benar kamu terima hanya Rp800.000.",
+    baksoAmount: 700000,
+    baksoNote: "Potongan utang lama Rp700.000 setara dengan sekitar 47 mangkok bakso.",
+    insight: `Top up memang terasa seperti mendapat uang baru, Rp1.500.000. Angka yang besar.
+
+Tapi utang lama sebesar Rp700.000 langsung dipotong dari pinjaman baru tersebut. Uang yang benar-benar masuk ke rekening kamu hanya Rp800.000.
+
+Masalahnya, pinjaman baru ini dihitung dari Rp1.500.000. Utang kamu jadi lebih panjang dari sebelumnya.
+
+Tanyakan dua hal ini. Berapa uang bersih yang benar-benar masuk? Dan, berapa total utang baru setelah melakukan top up?`
+  },
+
+
+  {
+    category: "Denda",
+    title: "Denda telat yang numpuk",
+    scenario: "Cicilanmu Rp500.000 per bulan.\n\nKalau telat, denda Rp15.000 per hari.\n\nBulan ini kamu telat 18 hari sebelum bayar.",
+    question: "Total yang harus kamu bayar bulan ini jadi berapa?",
+    choices: [
+      { label: "Rp500.000", value: 500000 },
+      { label: "Rp770.000", value: 770000 },
+      { label: "Rp670.000", value: 670000 },
+      { label: "Rp950.000", value: 950000 }
+    ],
+    correctValue: 770000,
+    answerText: "Rp770.000",
+    revealText: "Denda Rp15.000 × 18 hari = Rp270.000. Total Rp500.000 + Rp270.000 = Rp770.000.",
+    baksoAmount: 270000,
+    baksoNote: "Denda Rp270.000 setara dengan 18 mangkok bakso.",
+    insight: `Denda harian memang terasa kecil karena hanya dilihat sebagai biaya satu hari.
+
+Rp15.000 terdengar seperti uang parkir atau jajan. Tapi denda ini terus berjalan selama tagihan belum dibayar.
+
+Dalam 18 hari, Rp15.000 berubah menjadi Rp270.000. Itu lebih dari setengah cicilan bulanan.
+
+Yang membuat nyesek adalah kamu tetap harus membayar cicilan Rp500.000-nya juga. Total pembayaran kamu naik dari Rp500.000 menjadi Rp770.000.
+
+Jadi saat melihat denda harian, langsung kalikan dengan kemungkinan hari keterlambatan. Baru kamu tahu biaya sesungguhnya.`
+  },
+
+];
+
+/* ---------- State ---------- */
+let currentIndex = 0;
+let score = 0;
+let isAnswered = false;
+
+/* ---------- DOM refs ---------- */
+const elProgressWrap = $("#progress-wrap");
+const elProgressFill = $("#progress-fill");
+const elProgressLabel = $("#progress-label");
+const elProgressPct = $("#progress-pct");
+const elScorePill = $("#score-pill");
+const elScoreVal = $("#score-val");
+
+const elStart = $("#start-screen");
+const elQuiz = $("#quiz-screen");
+const elEnd = $("#end-screen");
+
+const elCategory = $("#q-category");
+const elTitle = $("#q-title");
+const elScenario = $("#q-scenario");
+const elQuestion = $("#q-question");
+const elChoices = $("#choices");
+const elReveal = $("#reveal");
+const elStatus = $("#status-badge");
+const elCorrectPill = $("#correct-pill");
+const elAnswerLine = $("#answer-line");
+const elStatTotal = $("#stat-total");
+const elStatBakso = $("#stat-bakso");
+const elBaksoNote = $("#bakso-note");
+const elInsight = $("#insight-text");
+const elBtnNext = $("#btn-next");
+const elBtnPrev = $("#btn-prev");
+
+const elEndScore = $("#end-score");
+const elEndHeadline = $("#end-headline");
+const elEndSub = $("#end-sub");
+const elEndCorrect = $("#end-correct");
+const elEndWrong = $("#end-wrong");
+const elEndTotal = $("#end-total");
+const elEndReflTitle = $("#end-reflection-title");
+const elEndReflText = $("#end-reflection-text");
+
+/* ---------- Screens ---------- */
+function showScreen(name){
+  [elStart, elQuiz, elEnd].forEach(s => s.classList.remove("active"));
+  if(name === "start") elStart.classList.add("active");
+  if(name === "quiz") elQuiz.classList.add("active");
+  if(name === "end") elEnd.classList.add("active");
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+/* ---------- Quiz ---------- */
+function startGame(){
+  currentIndex = 0;
+  score = 0;
+  isAnswered = false;
+  elScorePill.style.display = "inline-flex";
+  elScoreVal.textContent = "0";
+  elProgressWrap.style.display = "block";
+  showScreen("quiz");
+  renderQuestion();
+}
+
+function renderQuestion(){
+  isAnswered = false;
+  const s = SCENARIOS[currentIndex];
+  elCategory.textContent = s.category;
+  elTitle.textContent = s.title;
+  elScenario.textContent = s.scenario;
+  elQuestion.textContent = s.question;
+
+  elReveal.style.display = "none";
+  elBtnNext.textContent = (currentIndex === SCENARIOS.length - 1) ? "Lihat Hasil" : "Lanjut";
+  elBtnPrev.style.display = currentIndex > 0 ? "inline-block" : "none";
+
+  // Choices
+  elChoices.innerHTML = "";
+  s.choices.forEach((c, idx) => {
+    const btn = document.createElement("button");
+    btn.className = "choice";
+    btn.type = "button";
+    btn.innerHTML = `<span class="key">${String.fromCharCode(65+idx)}</span><span class="label">${c.label}</span>`;
+    btn.addEventListener("click", () => handleAnswer(btn, c));
+    elChoices.appendChild(btn);
+  });
+
+  // Progress
+  const total = SCENARIOS.length;
+  const pct = Math.round(((currentIndex) / total) * 100);
+  elProgressFill.style.width = pct + "%";
+  elProgressLabel.textContent = `Skenario ${currentIndex+1} dari ${total}`;
+  elProgressPct.textContent = pct + "%";
+
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function handleAnswer(btn, choice){
+  if(isAnswered) return;
+  isAnswered = true;
+  const s = SCENARIOS[currentIndex];
+  const correct = (choice.value === s.correctValue);
+
+  // Style choices
+  const allBtns = elChoices.querySelectorAll(".choice");
+  allBtns.forEach((b) => {
+    b.disabled = true;
+    const lbl = b.querySelector(".label").textContent;
+    const matchVal = s.choices.find(c => c.label === lbl);
+    if(matchVal && matchVal.value === s.correctValue){
+      b.classList.add("correct");
+    } else if(b === btn && !correct){
+      b.classList.add("wrong");
+    } else {
+      b.classList.add("faded");
+    }
+  });
+
+  if(correct){
+    score++;
+    elScoreVal.textContent = score;
+  }
+
+  // Fill reveal
+  elStatus.className = "status " + (correct ? "ok" : "no");
+  elStatus.textContent = correct ? "✓ Pas" : "× Belum pas";
+  elCorrectPill.textContent = "Jawaban: " + s.answerText;
+  elAnswerLine.innerHTML = `<strong>Yang benar sebenarnya:</strong> ${s.answerText}<br><span class="muted">${s.revealText}</span>`;
+
+  // Total cost = correctValue for display; for bakso compare we use baksoAmount
+  const totalDisplay = s.correctValue;
+  elStatTotal.textContent = fmtRp(totalDisplay);
+  elStatBakso.textContent = baksoText(s.baksoAmount);
+  elBaksoNote.textContent = s.baksoNote;
+  elInsight.textContent = s.insight;
+
+  elReveal.style.display = "block";
+  setTimeout(() => {
+    elReveal.scrollIntoView({behavior:"smooth", block:"start"});
+  }, 80);
+}
+
+function nextQuestion(){
+  if(!isAnswered) return;
+  if(currentIndex < SCENARIOS.length - 1){
+    currentIndex++;
+    renderQuestion();
+  } else {
+    showEnd();
+  }
+}
+
+function prevQuestion(){
+  if(currentIndex > 0){
+    currentIndex--;
+    renderQuestion();
+  }
+}
+
+function showEnd(){
+  // Final progress
+  elProgressFill.style.width = "100%";
+  elProgressPct.textContent = "100%";
+  elProgressLabel.textContent = "Selesai";
+
+  const total = SCENARIOS.length;
+  const pct = Math.round((score / total) * 100);
+
+  elEndScore.textContent = pct + "%";
+  elEndCorrect.textContent = score;
+  elEndWrong.textContent = total - score;
+  elEndTotal.textContent = total;
+
+  let headline = "lumayan";
+  let title = "Lumayan, mulai terlihat";
+  let reflText = "";
+  if(pct === 100){
+    headline = "sangat jeli";
+    title = "Kamu sangat jeli";
+    reflText = `Kamu secara konsisten melihat total, bukan hanya cicilan bulanan. Insting kamu sudah bagus, pertahankan. Teruskan kebiasaan ini dalam keputusan keuangan yang nyata, hitung total sebelum berkomitmen.`;
+  } else if(pct >= 70){
+    headline = "cukup tajam";
+    title = "Kamu cukup tajam";
+    reflText = `Beberapa jebakan sudah kamu tangkap, tapi masih ada yang terlewat, mungkin jebakan biaya tersembunyi atau angka harian. Latihan ini, setiap melihat cicilan, langsung kalikan dengan durasinya untuk mengetahui total yang sebenarnya.`;
+  } else if(pct >= 40){
+    headline = "mulai curiga";
+    title = "Mulai peka";
+    reflText = `Kamu sudah mulai menyadari ada yang tidak terlihat, insting mulai berjalan. Tapi kamu masih mudah terjebak angka kecil yang terasa ringan. Biasakan bertanya "totalnya berapa?" sebelum mengambil keputusan cicilan.`;
+  } else {
+    headline = "masih bisa dilatih";
+    title = "Tidak apa-apa, ini memang jebakannya";
+    reflText = `Kamu sudah mencoba, dan itu langkah awal yang penting. Kamu masih fokus ke cicilan bulanan bukan total akhir, ini jebakan yang paling umum. Mulai sekarang, sebelum mencicil, hitung totalnya, cicilan dikali bulan. Baru putuskan.`;
+  }
+
+  elEndHeadline.textContent = headline;
+  elEndSub.textContent = "Ini refleksi singkat dari jawaban kamu.";
+  elEndReflTitle.textContent = title;
+  elEndReflText.textContent = reflText;
+
+  showScreen("end");
+}
+
+/* ---------- Events ---------- */
+$("#btn-start").addEventListener("click", startGame);
+$("#btn-next").addEventListener("click", nextQuestion);
+$("#btn-prev").addEventListener("click", prevQuestion);
+$("#btn-restart").addEventListener("click", startGame);
+</script>
+</body>
+</html>
